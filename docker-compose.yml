@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  bot:
+    build: .
+    env_file:
+      - .env
+    restart: always
+    environment:
+      - TRANSFORMERS_CACHE=/cache
+      - HF_HOME=/cache
+      - XDG_CACHE_HOME=/cache
+    volumes:
+      - cache:/cache
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      # - ./data:/app/data
+  # database:
+  #   image: postgres:16
+  #   container_name: database
+  #   restart: always
+  #   volumes:
+  #       - ./data:/var/lib/postgresql/data
+  #   ports:
+  #     - "127.0.0.1:5432:5432"
+  #   environment:
+  #     - 'POSTGRES_PASSWORD=postgres'
+  #     - 'POSTGRES_DB=rolling'
+  #     - 'POSTGRES_USER=postgres'
+volumes:
+  cache:
